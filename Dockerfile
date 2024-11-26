@@ -27,8 +27,8 @@ RUN bun test
 RUN bun run build
 
 # copy production app into the final image
-# FROM ubuntu:24.04
-FROM alpine:latest
+FROM ubuntu:24.04
+# FROM alpine:latest
 WORKDIR /app
 COPY --from=prerelease /usr/src/app/app .
 
