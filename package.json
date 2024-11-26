@@ -2,6 +2,10 @@
   "name": "bun-getting-started",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "dev": "bun run --watch index.ts",
+    "build": "bun build index.ts --target bun --compile --outfile app"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
