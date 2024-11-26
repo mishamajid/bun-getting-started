@@ -27,10 +27,10 @@ RUN bun test
 RUN bun run build
 
 # copy production app into the final image
-FROM base AS release
+FROM ubuntu:24.04
+WORKDIR /app
 COPY --from=prerelease /usr/src/app/app .
 
 # run the app
-USER bun
 EXPOSE 3000/tcp
 ENTRYPOINT [ "./app" ]
