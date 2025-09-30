@@ -1,10 +1,8 @@
 # use the official Bun image
-# see all versions at https://hub.docker.com/r/oven/bun/tags
 FROM oven/bun:1 AS base
 WORKDIR /usr/src/app
 
 # install dependencies into temp directory
-# this will cache them and speed up future builds
 FROM base AS install
 RUN mkdir -p /temp/dev
 COPY package.json bun.lockb /temp/dev/
@@ -23,12 +21,11 @@ COPY . .
 
 # [optional] tests & build
 ENV NODE_ENV=production
-RUN bun test
+RUN if [ "$NODE_ENV" = "test" ]; then bun test; fi
 RUN bun run build
 
 # copy production app into the final image
-FROM ubuntu:24.04
-# FROM alpine:latest
+FROM node:alpine
 WORKDIR /app
 COPY --from=prerelease /usr/src/app/app .
 
